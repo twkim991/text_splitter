@@ -11,7 +11,7 @@ def split_text(text: str, chunk_size: int):
     length = len(text)
 
     # 사용할 문장 경계 문자들
-    split_chars = ['.', '?', '!', ']']
+    split_chars = ['.', '’', '”', ']']
 
     while pos < length:
         end = min(pos + chunk_size, length)
