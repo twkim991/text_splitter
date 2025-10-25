@@ -3,8 +3,35 @@ import os
 import zipfile
 from file_parser import parse_file
 
+import re
+
 def split_text(text: str, chunk_size: int):
-    return [text[i:i + chunk_size] for i in range(0, len(text), chunk_size)]
+    result = []
+    pos = 0
+    length = len(text)
+
+    # 사용할 문장 경계 문자들
+    split_chars = ['.', '?', '!', ']']
+
+    while pos < length:
+        end = min(pos + chunk_size, length)
+        segment = text[pos:end]
+
+        # segment 안에서 마지막으로 등장한 문장경계문자의 위치를 찾음
+        split_points = [segment.rfind(c) for c in split_chars]
+        last_split_pos = max(split_points)
+
+        # 기준 문자 못 찾으면 그냥 chunk_size로 자름
+        if last_split_pos == -1 or pos + last_split_pos + 1 >= length:
+            split_point = end
+        else:
+            split_point = pos + last_split_pos + 1  # 경계 문자 포함하여 자름
+
+        result.append(text[pos:split_point].strip())
+        pos = split_point
+
+    return result
+
 
 def split_and_save(file_path: str, chunk_size: int, output_dir: str) -> str:
     os.makedirs(output_dir, exist_ok=True)

@@ -1,4 +1,4 @@
-# file_parser.py
+# filpip uninstall python-docx -ye_parser.py
 from docx import Document
 import os
 
