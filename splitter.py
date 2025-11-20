@@ -45,7 +45,7 @@ def split_and_save(file_path: str, chunk_size: int, output_dir: str) -> str:
     for idx, chunk in enumerate(chunks, start=1):
         output_path = os.path.join(output_dir, f"{base_name}_{idx}.txt")
         with open(output_path, 'w', encoding='utf-8') as f:
-            f.write(chunk)
+            f.write(chunk.replace('\n', '\r\n'))
         output_files.append(output_path)
 
     # 압축하기
